@@ -1,6 +1,6 @@
 #set multiplot layout 2, 3 
 
- set term wxt 1 
+ set term wxt 1 size 1300,700
  set autoscale # scale axes automatically
  unset log # remove any log-scaling
  unset label # remove any previous labels
@@ -20,7 +20,7 @@
  replot "clu0004.dat" using 1:3 title 'Density at 4 Gyr' with lines lt rgb "orange"
  replot "clu0005.dat" using 1:3 title 'Density at 5 Gyr' with lines lt rgb "green"
 
-set term wxt 2 
+set term wxt 2 size 1300,700
  set autoscale # scale axes automatically
  unset log # remove any log-scaling
  unset label # remove any previous labels
@@ -40,7 +40,7 @@ set term wxt 2
  replot "clu0004.dat" using 1:4 title 'Velocity at 4 Gyr' with lines lt rgb "orange"
  replot "clu0005.dat" using 1:4 title 'Velocity at 5 Gyr' with lines lt rgb "green"
 
-set term wxt 3
+set term wxt 3 size 1300,700
 set autoscale # scale axes automatically
  unset log # remove any log-scaling
  unset label # remove any previous labels
@@ -60,7 +60,7 @@ set autoscale # scale axes automatically
  replot "clu0004.dat" using 1:5 title 'Temperature at 4 Gyr' with lines lt rgb "orange"
  replot "clu0005.dat" using 1:5 title 'Temperature at 5 Gyr' with lines lt rgb "green"
 
-set term wxt 4
+set term wxt 4 size 1300,700
 set autoscale # scale axes automatically
  unset log # remove any log-scaling
  unset label # remove any previous labels
@@ -80,7 +80,7 @@ set autoscale # scale axes automatically
  replot "clu0004.dat" using 1:6 title 'Pressure at 4 Gyr' with lines lt rgb "orange"
  replot "clu0005.dat" using 1:6 title 'Pressure at 5 Gyr' with lines lt rgb "green"
 
-set term wxt 5
+set term wxt 5 size 1300,700
 set autoscale # scale axes automatically
  unset log # remove any log-scaling
  unset label # remove any previous labels

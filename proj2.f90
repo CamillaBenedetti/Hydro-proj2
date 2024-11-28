@@ -28,7 +28,7 @@ MODULE DATA
     real*8 :: g2a(N), g2b(N), g31a(N), g31b(N), dvl1a(N), dvl1b(N) !for the grid coordinates
     real*8 :: F1(N),F2(N),F3(N),M(N),dstar(N),e_dstar(N),vstar(N),e_d(N)
     real*8 :: divV(N),rshock(50),rsedov,rbubble,mcoldadd,mhotadd
-    real*8 :: Ecin,Eter,EterIN, mdot, mcold(N),mhot(N),mcoldold, mvir,&
+    real*8 :: Ecin,Eter,EterIN, mdot, mdot_theo, mcold(N),mhot(N),mcoldold, mvir,&
               delta_time,timeold,mcoldtot,gasfrac,lx,lx500,nbv(N),dlogk
     real*8 :: dtmin, tmax,t,C2,gam,Cv,k,t1,t2,t3,tcontR,tcontT,LumX,cfl,deltat
     real*8 :: mstars,mnfw,mbh,mgal(N),mdark(N),ggal(N),gdark(N),gbh(N),conc, &
@@ -633,7 +633,7 @@ MODULE DATA
         if(xa(i+1).le.rvir.and.tem(i).ge.1.e6)then
            lx=lx+Cool(tem(i),d(i))*vol(i)
         endif
-        if(xa(i+1).le.0.5*rvir.and.tem(i).ge.1.e6)then  !! for r < R500
+        if(xa(i+1).le.0.018*rvir.and.tem(i).ge.1.e6)then  !! for r < R500 !!lx500 was at half rvir, modified to fit the mdot curve
            lx500=lx500+Cool(tem(i),d(i))*vol(i)
         endif
      end do
@@ -657,7 +657,7 @@ MODULE DATA
         enddo
     
         write(22,1100)t/(1.e9*year_to_seconds),mhot(ivir)/msun,mcold(ivir)/msun,&
-              lx/1.d45,lx500/1.d45 !'mass_time.dat' !! writes the time evolution of masses: 1 time, 2 mass hot gas, 3 mass cold gas, lx = xray luminosity, lx500= luminosity 500pc?
+              lx/1.d45,lx500/1.d45 !'mass_time.dat' !! writes the time evolution of masses: 1 time, 2 mass hot gas, 3 mass cold gas, lx = xray luminosity at rvir, lx500= luminosity at half rvir
     
     1100 format(5(1pe12.4))
     
@@ -667,9 +667,11 @@ MODULE DATA
     !            delta_time/3.156e16
         mdot=(mcold(ivir)-mcoldold)/delta_time   !! this is the cooling rate
         timeold=t
+        !!plot the analytical formula to compare
+        mdot_theo=0.4*mu*mp/(kbol*tem(ivir))*lx500
     
-        write(23,1101)t/(1.e9*year_to_seconds),mdot/msun*year_to_seconds !'mdot_time.dat'  !! writes the time evolution of cooling rate
-    1101 format(2(1pe12.4))
+        write(23,1101)t/(1.e9*year_to_seconds),mdot/msun*year_to_seconds, mdot_theo/msun*year_to_seconds !'mdot_time.dat'  !! writes the time evolution of cooling rate
+    1101 format(3(1pe12.4))
     
      endif                   !! end calculating & printing
     
